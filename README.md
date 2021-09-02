@@ -1,5 +1,5 @@
 # An-Implementation-PRSnet
-this reposity aims to implement the PRS NET [[CODE](https://github.com/IGLICT/PRS-Net)]  [[MY Impl](https://github.com/WANGSSSSSSS/An-Implementation-PRSnet)]
+this reposity aims to implement the PRS NET [[CODE](https://github.com/IGLICT/PRS-Net)]  [[MY Impl](https://github.com/WANGSSSSSSS/An-Implementation-PRSnet)]  [[Paper](https://arxiv.org/abs/1910.06511)]
 
 ![image-20210902093628079](README/image-20210902093628079.png)
 
