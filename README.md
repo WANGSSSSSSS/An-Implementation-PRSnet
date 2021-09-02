@@ -1,5 +1,5 @@
 # An-Implementation-PRSnet
-this reposity aims to implement the PRS NET [[CODE](https://github.com/IGLICT/PRS-Net)]  [[MY Impl](https://github.com/WANGSSSSSSS/An-Implementation-PRSnet)]  [[Paper](https://arxiv.org/abs/1910.06511)]
+this reposity aims to implement the PRS NET [[Code](https://github.com/IGLICT/PRS-Net)]  [[My Impl](https://github.com/WANGSSSSSSS/An-Implementation-PRSnet)]  [[Paper](https://arxiv.org/abs/1910.06511)]
 
 ![image-20210902093628079](README/image-20210902093628079.png)
 
@@ -299,4 +299,10 @@ class Regularization(nn.Module):
         B = torch.matmul(M2, torch.transpose(M2,1,2)) - self.Id
         return torch.sum((A**2 + B**2), dim=(1,2))
 ```
+
+## Reference
+
+[1] [PRS-Net: Planar Reflective Symmetry Detection Net for 3D Models](https://arxiv.org/abs/1910.06511)
+
+[2] [ICT-PRSnet](https://github.com/IGLICT/PRS-Net)
 
