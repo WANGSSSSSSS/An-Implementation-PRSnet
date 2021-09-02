@@ -33,4 +33,5 @@ from core.model import Net
 net = Net(3,3,"bn")
 A = torch.rand([2,1,32,32,32], dtype=torch.float)
 result = net(A)
+#print(net.fex)
 

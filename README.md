@@ -10,7 +10,7 @@ this reposity aims to implement the PRS NET [[CODE](https://github.com/IGLICT/PR
 - [x] Model 调试
 - [x] Loss 实现
 - [ ] Loss 调试
-- [x] dataset 实现
+- [ ] dataset 实现
 - [x] 四元数 辅助函数
 - [ ] validation 后处理
 - [ ] 进行训练
