@@ -92,7 +92,7 @@ class Net(nn.Module):
         feature = feature.view(-1, 64)
         #print(feature.shape)
         Plane = self.Plane(feature)  # a, b,c,d  shape: [n,[b, 4]]
-        Rot = self.Rot(feature)      # \pi x,y,z shape: [n,[b, 3]]
+        Rot = self.Rot(feature)      # \pi x,y,z shape: [n,[b, 4]]
 
         return Plane, Rot
 
