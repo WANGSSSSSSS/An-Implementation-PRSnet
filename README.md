@@ -56,7 +56,7 @@ this reposity aims to implement the PRS NET [[CODE](https://github.com/IGLICT/PR
 
 ## 整体框架设计
 
-![image-20210902083846647](README/image-20210902083846647.png)
+<img src="README/image-20210902083846647.png" alt="image-20210902083846647" style="zoom:67%;" />
 
 ### Argsparse
 
