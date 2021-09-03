@@ -18,7 +18,7 @@ if __name__ == "__main__":
     args.add_argument("--alpha", default=32)
     args.add_argument("--load_path", default=None, type=str)
     args.add_argument("action", type=str)
-    args.add_argument("--device", default="cuda", type=str)
+    args.add_argument("--device", default="cpu", type=str)
 
     args = args.parse_args()
     device = torch.device("cpu") if args.device == "cpu" else torch.device("cuda")
@@ -38,7 +38,5 @@ if __name__ == "__main__":
     )
     if args.load_path is not None:
         controller.load_context(args.load_path)
-
-
     controller()
 

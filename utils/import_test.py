@@ -1,3 +1,22 @@
+
+def test_torch():
+    import torch
+    assert True
+def test_numpy():
+    import numpy
+    assert True
+def test_context():
+    from core.context import Context
+    assert True
+def test_model():
+    from core.model import Net
+    assert True
+def test_loss():
+    from core.loss import Regularization
+    from core.loss import DistanceLoss
+    assert True
+
+
 import torch
 import numpy as np
 # from core.loss import product, hamilton_product
@@ -29,9 +48,8 @@ import numpy as np
 # B = torch.rand([10,3,4], dtype=float)
 # test(A,B)
 
-from core.model import Net
-net = Net(3,3,"bn")
-A = torch.rand([2,1,32,32,32], dtype=torch.float)
-result = net(A)
+# from core.model import Net
+# net = Net(3,3,"bn")
+# A = torch.rand([2,1,32,32,32], dtype=torch.float)
+# result = net(A)
 #print(net.fex)
-
