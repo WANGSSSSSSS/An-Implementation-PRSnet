@@ -10,11 +10,28 @@ this reposity aims to implement the PRS NET [[Code](https://github.com/IGLICT/PR
 - [x] Model 调试
 - [x] Loss 实现
 - [x] Loss 调试
-- [x] dataset 实现
+- [x] dataset 实现（随机生成数据）
+- [x] dataset 调试
 - [x] 四元数 辅助函数
+- [x] 可视化 训练曲线
 - [ ] validation 后处理
 - [ ] 进行训练
 - [ ] 测试结果
+
+## Usage :
+
+```bash
+python3 ./main.py Train 
+python3 ./main.py --help
+```
+
+**可视化训练曲线 ：**
+
+```python
+tensorboard --logdir=./log
+```
+
+![数据是随机生成的，简单看一下](README/image-20210903100112942.png)
 
 ## 辅助函数
 

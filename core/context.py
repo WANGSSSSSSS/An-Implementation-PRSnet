@@ -48,7 +48,9 @@ class Context :
             self.writer.add_scalar("train-epoch/Loss", loss, self.epoch)
             self.writer.add_scalar("train-epoch/Loss-reg", reg_loss, self.epoch)
             self.writer.add_scalar("train-epoch/Loss-dis", dis_loss, self.epoch)
-
+            self.writer.add_scalar("train-epoch/LR", self.scheduler.get_last_lr()[0], self.epoch)
+            if epoch % 10 == 0 :
+                self.save_context()
             self.test_process()
 
 
