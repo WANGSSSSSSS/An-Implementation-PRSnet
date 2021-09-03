@@ -13,9 +13,11 @@ from torch.utils.tensorboard import SummaryWriter
 class Context :
     def __init__(self, SN, PN, lr, epochs, batch_size, alpha, train=False,
                  save_dir = "",
-                 log_dir = ""):
+                 log_dir = "",
+                 device = None):
         self.lr = lr
         self.epoch = 1
+        self.device = device
         self.epochs = epochs
         self.batch_size = batch_size
         self.alpha = alpha
@@ -24,15 +26,15 @@ class Context :
         self.log_dir = log_dir
         self.log_step = 0
         # basic item
-        self.Net = Net(PN,PN,"bn")
+        self.Net = Net(PN,PN,"bn", device)
         self.train_dataset = ShapeDataset()
         self.train_dataloader = DataLoader(self.train_dataset,self.batch_size)
         self.test_dataset = ShapeDataset()
         self.test_dataloader = DataLoader(self.test_dataset,self.batch_size)
         # train item
         if self.train :
-            self.reg_loss = Regularization()
-            self.dis_loss = DistanceLoss(SN)
+            self.reg_loss = Regularization(device)
+            self.dis_loss = DistanceLoss(SN, device)
             self.optimizer = Adam(self.Net.parameters(), lr=self.lr)
             self.scheduler = StepLR(self.optimizer, step_size=8000)
         else :
@@ -58,9 +60,9 @@ class Context :
         for (i, batch) in enumerate(self.train_dataloader):
             self.log_step += 1
             self.optimizer.zero_grad()
-            v = batch["voxel"]
-            cp = batch["close_points"]
-            points = batch["sample"]
+            v = batch["voxel"].to(self.device)
+            cp = batch["close_points"].to(self.device)
+            points = batch["sample"].to(self.device)
             plane, quat = self.Net(v)
             reg_loss = self.reg_loss(plane, quat)
             dis_loss = self.dis_loss(points,cp, v,plane, quat)

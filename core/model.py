@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class PlaneHead(nn.Module):
-    def __init__(self, n, in_cn):
+    def __init__(self, n, in_cn, device):
         super(PlaneHead, self).__init__()
         self.expect_n = n
         self.transfrom = []
@@ -16,6 +16,7 @@ class PlaneHead(nn.Module):
             finial = nn.Linear(in_cn//4, 4)
             finial.bias.data = torch.Tensor(init_bias[i])
             self.transfrom[-1].add_module("finial "+str(i), finial)
+            self.transfrom[-1].to(device)
 
     def forward(self, feature):
         out = []
@@ -24,7 +25,7 @@ class PlaneHead(nn.Module):
         return out
 
 class RotHead(nn.Module):
-    def __init__(self, n, in_cn):
+    def __init__(self, n, in_cn, device):
         super(RotHead, self).__init__()
         self.expect_n = n
         self.transfrom = []
@@ -39,6 +40,7 @@ class RotHead(nn.Module):
             finial.weight.data *= 0
             finial.bias.data = torch.Tensor(init_bias[i])
             self.transfrom[-1].add_module("Plane Linear " + str(i), finial)
+            self.transfrom[-1].to(device)
             #self.transfrom[-1].add_module("activate Layer", nn.LeakyReLU())
 
     def forward(self, feature):
@@ -48,7 +50,7 @@ class RotHead(nn.Module):
         return out
 
 class Net(nn.Module):
-    def __init__(self, pn, rn, bn):
+    def __init__(self, pn, rn, bn, device):
         super(Net, self).__init__()
 
         self.bn = self.selectBN(bn)
@@ -82,9 +84,9 @@ class Net(nn.Module):
         self.fex.add_module("[BN]-5", self.bn(64))
         self.fex.add_module("[activate Leaky RELU]-5", nn.LeakyReLU())
 
-
-        self.Plane = PlaneHead(pn, 64)
-        self.Rot = RotHead(rn, 64)
+        self.fex.to(device)
+        self.Plane = PlaneHead(pn, 64, device)
+        self.Rot = RotHead(rn, 64, device)
 
     def forward(self, voxel):
         #print(voxel.shape)

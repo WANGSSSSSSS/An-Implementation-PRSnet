@@ -3,9 +3,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class Regularization(nn.Module):
-    def __init__(self):
+    def __init__(self, device):
         super(Regularization, self).__init__()
-        self.Id = torch.eye(3, requires_grad=False).unsqueeze(0)
+        self.Id = torch.eye(3, requires_grad=False).unsqueeze(0).to(device)
     def forward(self, plane, rot):
         plane = [p.unsqueeze(1) for p in plane]
         plane = torch.cat(plane, dim=1)
@@ -25,7 +25,7 @@ def product(q1, q2):
     b,n,_ = q1.shape
     q1 = q1.view(-1,1,4)
     q2 = q2.view(-1,1,4)
-    p = torch.zeros([b*n,4])
+    p = torch.zeros([b*n,4]).to(q1.device)
     p[:,0] = q1[:,0,0] * q2[:,0,0] - torch.matmul(q1[:,:,1:], torch.transpose(q2[:,:,1:],1,2))[:,0,0]
     p[:,1:] = q1[:,0,:1].repeat(1,1,3) * q2[:,0,1:] +\
               q1[:,0,1:]*q2[:,0,:1].repeat(1,1,3) + \
@@ -38,13 +38,14 @@ def quat_conjugate(quat):
   return q_conj
 
 class DistanceLoss(nn.Module):
-    def __init__(self, samples):
+    def __init__(self, samples, device):
         super(DistanceLoss, self).__init__()
         self.N = samples
         self.valid = False
+        self.device = device
     def forward(self, samples, close_point, voxel, plane, rot):
-        plane_loss = torch.Tensor([0])
-        rot_loss = torch.Tensor([0])
+        plane_loss = torch.Tensor([0]).to(self.device)
+        rot_loss = torch.Tensor([0]).to(self.device)
         #TODO 处理损失函数
         for p in plane :
             _points = self.planeTrans(samples, p)
