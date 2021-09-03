@@ -14,19 +14,17 @@ class Context :
     def __init__(self, SN, PN, lr, epochs, batch_size, alpha, train=False,
                  save_dir = "",
                  log_dir = ""):
-        self.sampleN = None
-        self.predN = None
-        self.lr = 0.1
+        self.lr = lr
         self.epoch = 1
-        self.epochs = 1
-        self.batch_size = 1
-        self.alpha = 1
-        self.train = True
-        self.save_dir = ""
-        self.log_dir = ""
+        self.epochs = epochs
+        self.batch_size = batch_size
+        self.alpha = alpha
+        self.train = train
+        self.save_dir = save_dir
+        self.log_dir = log_dir
         self.log_step = 0
         # basic item
-        self.Net = Net()
+        self.Net = Net(PN,PN,"bn")
         self.train_dataset = ShapeDataset()
         self.train_dataloader = DataLoader(self.train_dataset,self.batch_size)
         self.test_dataset = ShapeDataset()
@@ -34,9 +32,9 @@ class Context :
         # train item
         if self.train :
             self.reg_loss = Regularization()
-            self.dis_loss = DistanceLoss()
+            self.dis_loss = DistanceLoss(SN)
             self.optimizer = Adam(self.Net.parameters(), lr=self.lr)
-            self.scheduler = StepLR(self.optimizer, {})
+            self.scheduler = StepLR(self.optimizer, step_size=8000)
         else :
             pass
 
@@ -44,7 +42,7 @@ class Context :
     def train_process(self):
         for epoch in range(self.epoch, self.epochs):
             self.epoch += 1
-            loss, reg_loss, dis_loss = self.train_epoch(epoch)
+            loss, reg_loss, dis_loss = self.train_epoch()
             self.writer.add_scalar("train-epoch/Loss", loss, self.epoch)
             self.writer.add_scalar("train-epoch/Loss-reg", reg_loss, self.epoch)
             self.writer.add_scalar("train-epoch/Loss-dis", dis_loss, self.epoch)
@@ -66,12 +64,10 @@ class Context :
             plane, quat = self.Net(v)
             reg_loss = self.reg_loss(plane, quat)
             dis_loss = self.dis_loss(points,cp, v,plane, quat)
-            loss = self.alpha * reg_loss + dis_loss
-
+            loss = (self.alpha * reg_loss + dis_loss)/self.batch_size  #reduce for mini-batch
             sum_loss += loss.item()
             sum_reg += reg_loss.item()
             sum_dis += dis_loss.item()
-
             loss.backward()
             self.optimizer.step()
             self.scheduler.step()
