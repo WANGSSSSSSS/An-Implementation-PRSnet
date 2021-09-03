@@ -1,2 +1,3 @@
 torch
+tensorboard==2.4.1
 numpy==1.17.4
