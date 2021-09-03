@@ -1,5 +1,7 @@
 # An-Implementation-PRSnet
 
+[![Build Status](README/An-Implementation-PRSnet.svg)](https://app.travis-ci.com/WANGSSSSSSS/An-Implementation-PRSnet)
+
 this reposity aims to implement the PRS NET [[Code](https://github.com/IGLICT/PRS-Net)]  [[My Impl](https://github.com/WANGSSSSSSS/An-Implementation-PRSnet)]  [[Paper](https://arxiv.org/abs/1910.06511)]
 
 ![image-20210902093628079](README/image-20210902093628079.png)
