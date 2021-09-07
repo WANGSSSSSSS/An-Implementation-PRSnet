@@ -36,5 +36,5 @@ tensorboard --logdir=./log
 
 ![数据是随机生成的，简单看一下](README/image-20210903100112942.png)
 
-相关算法具体内容，可以访问[WIKI](https://github.com/WANGSSSSSSS/An-Implementation-PRSnet/wiki)
+相关算法具体内容，可以访问[仓库的WIKI](https://github.com/WANGSSSSSSS/An-Implementation-PRSnet/wiki)
 
